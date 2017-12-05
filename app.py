@@ -1,3 +1,13 @@
+# improve page ranking algorithm
+def pageRank():
+	return
+
+def popularity(p):
+	score = 0
+	for f in friends(p):
+		score += popularity(f)
+	return score
+
 def get_page(url):
     try:
             if url == "http://xkcd.com/353":
