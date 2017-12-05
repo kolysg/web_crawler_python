@@ -1,12 +1,23 @@
 # improve page ranking algorithm
+# try: Relaxation algorithm
+# start with a guess - a timestep (the numebr of time you are going to guess), a person
+# at base case 0, timestep is 0, guess p = 1
+
+
+
 def pageRank():
 	return
 
-def popularity(p):
-	score = 0
-	for f in friends(p):
-		score += popularity(f)
-	return score
+def popularity(t,p):
+	# base case
+	if t == 0:
+		return 1
+	else:
+		score = 0
+		for f in friends(p):
+			# popularity of a person at a previous step
+			score += popularity(t-1, f)
+		return score
 
 def get_page(url):
     try:
