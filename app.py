@@ -1,15 +1,51 @@
 # improve page ranking algorithm
-# try: Relaxation algorithm
+# try1: Relaxation algorithm
 # start with a guess - a timestep (the numebr of time you are going to guess), a person
 # at base case 0, timestep is 0, guess p = 1
 
+# try2: pagerank algorithm
+'''
+rank(page, time) is defined as: 
+∑d⋅rank(t−1,p)/outlinks
+p∈inlinks 
+​
+​​  or:
 
+   rank(page, 0) = 1/npages
 
-def URank(t, url):
-	# output
-	# basecase - at timestep 0, all pages will have rank 1
+   rank(page, t) = (1-d)/npages 
+               + sum (d * rank(p, t - 1) / number of outlinks from p) 
+          over all pages p that link to this page 
+'''
 
-	return
+def compute_ranks(graph):
+	# input - dictionary of nodes
+	d = 0.8 #damping constant
+
+	numloops = 10
+	# base case
+	ranks = {}
+	npages = len(graph)
+
+	# give a weight to the vertices/NODES
+	for page in graph:
+		ranks[page] = 1.0 / npages
+
+	for i in range(0, numloops):
+		# update newranks based on the ranking formula
+		newranks = {}
+		for page in graph:
+			# with damping factor, calculate an initial newrank value
+			newrank = (1-d) / npages
+			# update newrank value for the outlinks
+			for node in grapb:
+				if page in graph[node]:
+					newrank += d * (ranks[node] / len(graph[node]))
+				newranks[page] = newrank
+		# update ranks
+		ranks = newranks
+	return ranks
+
 
 def popularity(t,p):
 	# base case
@@ -77,7 +113,7 @@ def crawl_web(seed):
 
             # update graph
             graph[page] = outlinks
-             
+
             crawled.append(page) 
     return index 
 
